@@ -87,11 +87,14 @@ namespace Microsoft.Azure.Management.ApiManagement.ArmTemplates.Extractor.Entity
                 var serviceApiNames = serviceApis.Select(api => api.Name).ToList();
                 apiTemplate.TypedResources = await this.GenerateMultipleApisTemplateAsync(serviceApiNames, baseFilesGenerationDirectory, extractorParameters);
             }
-
-            var serviceDiagnosticTemplateResources = await this.diagnosticExtractor.GetServiceDiagnosticsTemplateResourcesAsync(extractorParameters);
-            if (!serviceDiagnosticTemplateResources.IsNullOrEmpty())
-            {
-                apiTemplate.TypedResources.Diagnostics.AddRange(serviceDiagnosticTemplateResources);
+            try{
+                var serviceDiagnosticTemplateResources = await this.diagnosticExtractor.GetServiceDiagnosticsTemplateResourcesAsync(extractorParameters);
+                if (!serviceDiagnosticTemplateResources.IsNullOrEmpty())
+                {
+                    apiTemplate.TypedResources.Diagnostics.AddRange(serviceDiagnosticTemplateResources);
+                }
+            }catch(Exception e){
+                this.logger.LogError("DiagnoticTemplate error {0}", e.Data.ToString());
             }
 
             return apiTemplate;

@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.ApiManagement.ArmTemplates.Commands.Executo
             List<string> multipleApiNames,
             string baseFilesGenerationDirectory)
         {
-            this.logger.LogInformation("Started generation of api template...");
+            this.logger.LogInformation("Started generation of api template 1 2 3...");
 
             var apiTemplate = await this.apiExtractor.GenerateApiTemplateAsync(
                 singleApiName,
